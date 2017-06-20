@@ -23,7 +23,7 @@ def upgrade():
         "user",
         sa.Column("id", sa.Integer, primary_key=True, nullable=False),
         sa.Column("email", sa.String(128), nullable=False),
-        sa.Column("password", sa.String(128), nullable=False),
+        sa.Column("password", sa.String(512), nullable=False),
         sa.Column("name", sa.String(128)),
     )
 
@@ -32,7 +32,7 @@ def upgrade():
         sa.Column("id", sa.Integer, primary_key=True, nullable=False),
         sa.Column("user_id", sa.Integer, ForeignKey("user.id")),
         sa.Column("image_name", sa.String(128)),
-        sa.Column("content", sa.String(512)),
+        sa.Column("content", sa.String(512), nullable=False),
         sa.Column("date_created", sa.DateTime, nullable=False),
         sa.Column("is_liked", sa.Integer, nullable=False, default=0)
     )
