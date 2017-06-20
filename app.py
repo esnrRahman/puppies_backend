@@ -11,6 +11,10 @@ from resources import SigninResource, UserResource, PostResource, UserPostsResou
 app = Flask(__name__)
 api = Api(app)
 
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+
+app.config['ALLOWED_EXTENSIONS'] = (['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', "JPG"])
+
 login_manager = LoginManager()
 # TODO: Revisit to what extent you need session strength
 # login_manager.session_protection = 'strong'

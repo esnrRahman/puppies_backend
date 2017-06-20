@@ -42,7 +42,7 @@ class Post(Base):
     id = Column(Integer, unique=True, primary_key=True)
     user_id = Column(Integer, ForeignKey("user.id"))
     image_name = Column(String(128))
-    content = Column(String(512), nullable=False)
+    content = Column(String(512))
     date_created = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
 
     # TODO: Create a separate reactions table

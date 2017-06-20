@@ -2,7 +2,6 @@ import json
 import re
 from sqlalchemy import inspect
 
-
 class ModuleHelper(object):
 
     # @classmethod
@@ -28,3 +27,9 @@ class ModuleHelper(object):
         :return: 
         """
         return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
+
+    @classmethod
+    def allowed_file(cls, filename):
+        from app import app
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']

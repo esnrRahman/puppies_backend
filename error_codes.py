@@ -134,3 +134,4 @@ class ErrorCodes(object):
     NO_USERNAME_OR_PASSWORD_ERROR_MESSAGE             = "Username or password not provided"
     USER_NOT_FOUND_ERROR_MESSAGE                      = "User not found"
     USER_ALREADY_EXISTS_ERROR_MESSAGE                 = "User already exists"
+    POST_NO_CONTENT_OR_IMG_UPLOAD_ERROR_MESSAGE       = "Post has no content or image has not been uploaded"
