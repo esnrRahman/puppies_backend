@@ -8,7 +8,7 @@
 ## Pre-Requirements ->
 
 * MySQL installed
-* A db is created that is called *puppies_db*
+* A db is created that is called **puppies_db**
 * virtualenv installed
 
 ### Steps before running test script ->
@@ -35,4 +35,21 @@
 
 `./test.sh`
 
+#### Notes -
+
+* Test script uses **curl** but I highly recommend using **Postman** to test API freely
+
+* jpeg, jpg, png, gif images are supported for now
+
+* Set up a simple bash script file to test basic core functionality
+
+
 #### Caveats -
+
+* Did not set up a testing codebase
+
+* Did not set up a custom Exception handler for unsupported image files [Or any exception for that matter]
+
+* Did not set up a proper reactions table for further feature addition (like multiple reactions)
+
+* Did not set up a rate limiter for APIs that do not require login (i.e. cookie) to access
