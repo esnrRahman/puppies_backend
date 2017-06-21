@@ -30,6 +30,7 @@ class ModuleHelper(object):
 
     @classmethod
     def allowed_file(cls, filename):
+        # NOTE: Recommended to not do such imports. Figure out a way to remove
         from app import app
         return '.' in filename and \
-               filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+               filename.rsplit('.', 1)[1] in app.config["ALLOWED_EXTENSIONS"]

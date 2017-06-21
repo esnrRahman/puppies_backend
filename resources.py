@@ -246,14 +246,14 @@ class PostsResource(Resource):
         try:
             filename = None
             content = None
-            file = request.files['file'] if "file" in request.files else None
+            file = request.files["file"] if "file" in request.files else None
 
             if file and ModuleHelper.allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-
+                # NOTE: Recommended to not do such imports. Figure out a way to remove
                 from app import app
                 basedir = os.path.abspath(os.path.dirname(__file__))
-                file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
+                file.save(os.path.join(basedir, app.config["UPLOAD_FOLDER"], filename))
 
             # TODO: Not clean but just make it work
             if request.form.getlist("content"):

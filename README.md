@@ -31,6 +31,10 @@
 
 `alembic upgrade head`
 
+* Run app
+
+`python app.py`
+
 * Run test script
 
 `./test.sh`
