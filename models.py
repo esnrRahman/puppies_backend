@@ -19,9 +19,9 @@ class User(Base):
     __tablename__ = "user"
 
     id = Column(Integer, unique=True, primary_key=True)
-    name = Column(String(128), nullable=False)
-    email = Column(EmailType(length=128))
-    password = Column(PasswordType(schemes=['pbkdf2_sha512', 'md5_crypt'], deprecated=['md5_crypt']))
+    email = Column(EmailType(length=128), nullable=False)
+    password = Column(PasswordType(schemes=['pbkdf2_sha512', 'md5_crypt'], deprecated=['md5_crypt']), nullable=False)
+    name = Column(String(128))
 
     def is_authenticated(self):
         return True
@@ -41,11 +41,11 @@ class Post(Base):
 
     id = Column(Integer, unique=True, primary_key=True)
     user_id = Column(Integer, ForeignKey("user.id"))
-    # TODO: Create a separate reactions table
-    image_name = Column(String(128), nullable=False)
+    image_name = Column(String(128))
+    content = Column(String(512))
+    date_created = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
 
-    content = Column(String(512), nullable=False)
-    date_created = Column(DateTime, default=datetime.datetime.utcnow)
+    # TODO: Create a separate reactions table
     is_liked = Column(TINYINT(unsigned=True), default=Constants.POST_NOT_LIKED)
 
 if __name__ == "__main__":
