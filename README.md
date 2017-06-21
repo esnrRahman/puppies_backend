@@ -31,6 +31,10 @@
 
 `alembic upgrade head`
 
+* Run app
+
+`python app.py`
+
 * Run test script
 
 `./test.sh`
@@ -53,3 +57,6 @@
 * Did not set up a proper reactions table for further feature addition (like multiple reactions)
 
 * Did not set up a rate limiter for APIs that do not require login (i.e. cookie) to access
+
+* Can upload any pic to be honest now. There is no code to validate that the pic is actually of a dog
+

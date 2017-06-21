@@ -30,7 +30,7 @@ curl -i -H "Content-Type: application/json" -X GET --cookie "session=${SESSION_C
 echo
 
 echo "**** Creating a post ****"
-echo "Please provide a path to an image that needs to be uploaded [Press ENTER if you do not want a file to be uploaded]"
+echo "Please provide a COMPLETE ABSOLUTE path to an image that needs to be uploaded [Press ENTER if you do not want a file to be uploaded]"
 
 read FILE_PATH
 
