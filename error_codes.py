@@ -128,6 +128,8 @@ class ErrorCodes(object):
     LOG_IN_SUCCESS_MESSAGE                      = "Successfully logged in !"
     LOG_OUT_SUCCESS_MESSAGE                     = "Successfully logged out !"
     FOUND_USER_SUCCESS_MESSAGE                  = "Successfully found user !"
+    POST_LIKED_SUCCESS_MESSAGE                  = "Post has been liked !"
+    POST_UNLIKED_SUCCESS_MESSAGE                = "Post has been unliked !"
 
     # 4XX related messages
 
@@ -135,3 +137,4 @@ class ErrorCodes(object):
     USER_NOT_FOUND_ERROR_MESSAGE                      = "User not found"
     USER_ALREADY_EXISTS_ERROR_MESSAGE                 = "User already exists"
     POST_NO_CONTENT_OR_IMG_UPLOAD_ERROR_MESSAGE       = "Post has no content or image has not been uploaded"
+    POST_NOT_FOUND_ERROR_MESSAGE                      = "Post not found"

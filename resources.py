@@ -3,6 +3,7 @@ import traceback
 
 from models import User, Post
 from module_helper import ModuleHelper
+from constants import Constants
 from db import session
 from error_codes import ErrorCodes
 from decorators.before_request import before_request
@@ -216,7 +217,44 @@ class PostsResource(Resource):
 
 
 class LikeResource(Resource):
-    pass
+    @login_required
+    @before_request
+    def put(self, post_id, user=None):
+        status = ErrorCodes.INTERNAL_SERVER_ERROR
+        message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status], "")
+
+        try:
+            post = session.query(Post).filter(Post.id == post_id, Post.user_id == user.id).first()
+            if post:
+                status = ErrorCodes.OK
+
+                if not post.is_liked:
+                    post.is_liked = Constants.POST_LIKED
+                    message = ErrorCodes.SUCCESS_MESSAGE.format(ErrorCodes.responses[status],
+                                                                ErrorCodes.POST_LIKED_SUCCESS_MESSAGE)
+                else:
+                    post.is_liked = Constants.POST_NOT_LIKED
+                    message = ErrorCodes.SUCCESS_MESSAGE.format(ErrorCodes.responses[status],
+                                                                ErrorCodes.POST_UNLIKED_SUCCESS_MESSAGE)
+
+                session.add(post)
+                session.commit()
+
+                post_dict = ModuleHelper.object_as_dict(post)
+                post_dict["message"] = message
+
+                return make_response(jsonify(post_dict), status)
+
+            else:
+                status = ErrorCodes.NOT_FOUND
+                message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status],
+                                                          ErrorCodes.POST_NOT_FOUND_ERROR_MESSAGE)
+
+        except Exception as e:
+            traceback.print_exc()
+
+        return make_response(jsonify({"message": message}), status)
+
 
 class LikesResource(Resource):
     pass
