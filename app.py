@@ -59,6 +59,7 @@ api.add_resource(PostsResource, "/puppies/api/v1.0/posts", endpoint="posts")
 # * All reactions will be added/updated in this table
 
 # PUT - Like a post <- NOTE: Should it be a PATCH?
+# NOTE: Same route will be used to unlike a post as well
 api.add_resource(LikeResource, "/puppies/api/v1.0/posts/<int:post_id>/like", endpoint="like_post")
 
 # GET - Return posts that have been liked by a user
