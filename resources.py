@@ -180,7 +180,34 @@ class PostResource(Resource):
 
 
 class UserPostsResource(Resource):
-    pass
+    @login_required
+    @before_request
+    def get(self, user_id, user=None):
+        status = ErrorCodes.INTERNAL_SERVER_ERROR
+        message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status], "")
+        posts = []
+        try:
+            user = session.query(User).filter(User.id == user_id).first()
+
+            if user:
+                status = ErrorCodes.OK
+
+                all_posts = session.query(Post).filter(Post.user_id == user_id).order_by(desc(Post.date_created)).all()
+
+                for post in all_posts:
+                    post_dict = ModuleHelper.object_as_dict(post)
+                    posts.append(post_dict)
+
+                return make_response(jsonify(posts), status)
+            else:
+                status = ErrorCodes.NOT_FOUND
+                message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status],
+                                                          ErrorCodes.USER_NOT_FOUND_ERROR_MESSAGE)
+
+        except Exception as e:
+            traceback.print_exc()
+
+        return make_response(jsonify({"message": message}), status)
 
 
 class PostsResource(Resource):
@@ -295,7 +322,35 @@ class LikeResource(Resource):
 
 
 class LikesResource(Resource):
-    pass
+    @login_required
+    @before_request
+    def get(self, user_id, user=None):
+        status = ErrorCodes.INTERNAL_SERVER_ERROR
+        message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status], "")
+        posts = []
+        try:
 
+            user = session.query(User).filter(User.id == user_id).first()
 
+            if user:
+                status = ErrorCodes.OK
 
+                all_posts = session.query(Post)\
+                    .filter(Post.user_id == user_id, Post.is_liked == Constants.POST_LIKED)\
+                    .order_by(desc(Post.date_created))\
+                    .all()
+
+                for post in all_posts:
+                    post_dict = ModuleHelper.object_as_dict(post)
+                    posts.append(post_dict)
+
+                return make_response(jsonify(posts), status)
+            else:
+                status = ErrorCodes.NOT_FOUND
+                message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status],
+                                                          ErrorCodes.USER_NOT_FOUND_ERROR_MESSAGE)
+
+        except Exception as e:
+            traceback.print_exc()
+
+        return make_response(jsonify({"message": message}), status)
