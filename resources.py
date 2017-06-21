@@ -12,6 +12,7 @@ from flask import request, jsonify, make_response
 from flask_restful import Resource
 from flask_login import login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
+from sqlalchemy import desc
 
 
 class TestResource(Resource):
@@ -76,7 +77,6 @@ class SignoutResource(Resource):
 
 
 class UserResource(Resource):
-
     @login_required
     @before_request
     def get(self, user_id, user=None):
@@ -156,7 +156,28 @@ class CreateUserResource(Resource):
 
 
 class PostResource(Resource):
-    pass
+    @login_required
+    @before_request
+    def get(self, post_id, user=None):
+        status = ErrorCodes.INTERNAL_SERVER_ERROR
+        message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status], "")
+        try:
+            post = session.query(Post).filter(Post.id == post_id, Post.user_id == user.id).first()
+
+            if post:
+                post_dict = ModuleHelper.object_as_dict(post)
+
+                return make_response(jsonify(post_dict), status)
+            else:
+                status = ErrorCodes.NOT_FOUND
+                message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status],
+                                                          ErrorCodes.POST_NOT_FOUND_ERROR_MESSAGE)
+
+        except Exception as e:
+            traceback.print_exc()
+
+        return make_response(jsonify({"message": message}), status)
+
 
 class UserPostsResource(Resource):
     pass
@@ -166,7 +187,24 @@ class PostsResource(Resource):
     @login_required
     @before_request
     def get(self, user=None):
-        pass
+        status = ErrorCodes.INTERNAL_SERVER_ERROR
+        message = ErrorCodes.ERROR_MESSAGE.format(ErrorCodes.responses[status], "")
+        posts = []
+        try:
+            status = ErrorCodes.OK
+
+            all_posts = session.query(Post).order_by(desc(Post.date_created)).all()
+
+            for post in all_posts:
+                post_dict = ModuleHelper.object_as_dict(post)
+                posts.append(post_dict)
+
+            return make_response(jsonify(posts), status)
+
+        except Exception as e:
+            traceback.print_exc()
+
+        return make_response(jsonify({"message": message}), status)
 
     @login_required
     @before_request
