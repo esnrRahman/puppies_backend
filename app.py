@@ -13,7 +13,7 @@ api = Api(app)
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 
-app.config['ALLOWED_EXTENSIONS'] = (['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', "JPG"])
+app.config['ALLOWED_EXTENSIONS'] = (['png', 'jpg', 'jpeg', 'gif', "JPG", "PNG", "JPEG", "GIF"])
 
 login_manager = LoginManager()
 # TODO: Revisit to what extent you need session strength
@@ -34,7 +34,7 @@ api.add_resource(TestResource, "/puppies/api/v1.0/test", endpoint="test")
 api.add_resource(SigninResource, "/puppies/api/v1.0/signin", endpoint="login")
 
 # GET - Sign out a user
-api.add_resource(SignoutResource, "/puppies/api/v1.0/logout", endpoint="logout")
+api.add_resource(SignoutResource, "/puppies/api/v1.0/signout", endpoint="logout")
 
 # GET - Get user profile
 api.add_resource(UserResource, "/puppies/api/v1.0/users/<int:user_id>", endpoint="user_by_id")

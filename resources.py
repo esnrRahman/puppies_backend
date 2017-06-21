@@ -165,7 +165,11 @@ class PostResource(Resource):
             post = session.query(Post).filter(Post.id == post_id, Post.user_id == user.id).first()
 
             if post:
+                status = ErrorCodes.OK
+                message = ErrorCodes.SUCCESS_MESSAGE.format(ErrorCodes.responses[status], "")
+
                 post_dict = ModuleHelper.object_as_dict(post)
+                post_dict["message"] = message
 
                 return make_response(jsonify(post_dict), status)
             else:
@@ -242,7 +246,7 @@ class PostsResource(Resource):
         try:
             filename = None
             content = None
-            file = request.files['file']
+            file = request.files['file'] if "file" in request.files else None
 
             if file and ModuleHelper.allowed_file(file.filename):
                 filename = secure_filename(file.filename)

@@ -1,20 +1,55 @@
-Demo Puppies Backend app using the following technologies -
+# Demo Puppies Backend app using the following technologies -
 
 * Framework -> Flask
 * Language -> Python
 * DB -> MySQL
 * Migration tool -> Alembic
 
-Notes -
+## Pre-Requirements ->
 
-* Make sure virtualenv tools are installed
+* MySQL installed
+* A db is created that is called **puppies_db**
+* virtualenv installed
 
-* Make sure MySQL is installed locally with a db created called *puppies_db*
+### Steps before running test script ->
 
-* All API calls are made with localhost
+* Create a virtualenv with the following command
 
-* Make sure "Content-Type: application/json"
+`virtualenv <venv_name>`
 
-* To deactivate virtual environment -
+* Activate virtualenv
 
-> deactivate
+`source <venv_name>/bin/activate`
+
+* Run requirements file
+
+`cd puppies_backend`
+<br/>
+`pip install -r requirements.txt`
+
+* Run alembic script
+
+`alembic upgrade head`
+
+* Run test script
+
+`./test.sh`
+
+#### Notes -
+
+* Test script uses **curl** but I highly recommend using **Postman** to test API freely
+
+* jpeg, jpg, png, gif images are supported for now
+
+* Set up a simple bash script file to test basic core functionality
+
+
+#### Caveats -
+
+* Did not set up a testing codebase
+
+* Did not set up a custom Exception handler for unsupported image files [Or any exception for that matter]
+
+* Did not set up a proper reactions table for further feature addition (like multiple reactions)
+
+* Did not set up a rate limiter for APIs that do not require login (i.e. cookie) to access
