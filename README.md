@@ -1,20 +1,38 @@
-Demo Puppies Backend app using the following technologies -
+# Demo Puppies Backend app using the following technologies -
 
 * Framework -> Flask
 * Language -> Python
 * DB -> MySQL
 * Migration tool -> Alembic
 
-Notes -
+## Pre-Requirements ->
 
-* Make sure virtualenv tools are installed
+* MySQL installed
+* A db is created that is called *puppies_db*
+* virtualenv installed
 
-* Make sure MySQL is installed locally with a db created called *puppies_db*
+### Steps before running test script ->
 
-* All API calls are made with localhost
+* Create a virtualenv with the following command
 
-* Make sure "Content-Type: application/json"
+`virtualenv <venv_name>`
 
-* To deactivate virtual environment -
+* Activate virtualenv
 
-> deactivate
+`source <venv_name>/bin/activate`
+
+* Run requirements file
+
+`cd puppies_backend`
+<br/>
+`pip install -r requirements.txt`
+
+* Run alembic script
+
+`alembic upgrade head`
+
+* Run test script
+
+`./test.sh`
+
+#### Caveats -
